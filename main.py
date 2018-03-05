@@ -33,7 +33,7 @@ def write_on_image(image, text):
 WARPED_XSIZE = 200
 WARPED_YSIZE = 300
 
-image_original = cv2.imread('stop4.jpg', 1)
+image_original = cv2.imread('speedsign13.jpg', 1)
 
 image = cv2.cvtColor(image_original, cv2.COLOR_BGR2GRAY)
 
@@ -120,6 +120,7 @@ for c in big_contours:
     print ('Area:', area)
 
     cv2.waitKey(0)
+
 
 
 
