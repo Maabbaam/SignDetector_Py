@@ -25,6 +25,7 @@ def order_points(pts):
     rect[3] = pts[np.argmax(diff)]
 
     # return the ordered coordinates
+   # print (rect)
     return rect
 
 
@@ -48,6 +49,8 @@ def four_point_transform(image, pts):
     heightB = np.sqrt(((tl[0] - bl[0]) ** 2) + ((tl[1] - bl[1]) ** 2))
     maxHeight = max(int(heightA), int(heightB))
 
+    maxHeight = 100
+    maxWidth = 100
     # now that we have the dimensions of the new image, construct
     # the set of destination points to obtain a "birds eye view",
     # (i.e. top-down view) of the image, again specifying points
@@ -80,13 +83,21 @@ args = vars(ap.parse_args())
 # let's just roll with it -- in future posts I'll show you how to
 # automatically determine the coordinates without pre-supplying them
 image = cv2.imread("speed_40.bmp")
-pts = np.array([(73, 239), (356, 117), (475, 265), (187, 443)], dtype = "float32")
+pts = np.array([(0, 0), (200, 0), (200, 300), (0, 300)], dtype = "float32")
+
+#pts = np.array([(356, 117), (73, 239), (475, 265), (187, 443)], dtype = "float32")
 
 # apply the four point tranform to obtain a "birds eye view" of
 # the image
 warped = four_point_transform(image, pts)
 
+sign = cv2.imread("speedsign3.jpg")
+result = cv2.matchTemplate(warped,sign , cv2.TM_CCOEFF_NORMED)
+
+print (result)
+
 # show the original and warped images
 cv2.imshow("Original", image)
 cv2.imshow("Warped", warped)
+cv2.imshow("Sign", sign)
 cv2.waitKey(0)
